@@ -1,0 +1,11 @@
+:root body.dark {
+    --app-bg-dark: #131313;
+    --app-tx-dark: #f8f9fa;
+}
+
+body {
+    background-color: var(--app-bg-dark, white) !important;
+    color: var(--app-tx-dark, black) !important;
+}
+
+/* if dark mode isn't set, fallback to light. */
