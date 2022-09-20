@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8" />
+<title>Rychlost.cz v novém (tmavém) kabátě: Návod na implementaci tmavého režimu pro web</title>
+<meta name='description' content='Web Rychlost.cz získal nový tmavý vzhled. Uvidí ho však primárně jen ti, kteří mají na počítači nastavenou preferenci tmavého designu nebo na mobilním telefonu aktivovaný tmavý (noční) režim. Na první pohled nejde o žádný velký redesign. Tato funkce však usnadní život zejména nočním tvorům, které pod rouškou tmy bílé nastavení oslňuje. Přináším vám návod, jak tmavý režim aktivovat i na vašem webu.' />
+<meta name='keywords' content='' />
+<link rel="stylesheet" type="text/css" href="styles/style.css" />
+<meta name='Author' content='Adam Haken (https://adam.haken.cz)' />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="icon" sizes="192x192" href="/_data/icon-192x192.png">
+<link rel="icon" sizes="128x128" href="/_data/icon-128x128.png">
+<script type='text/javascript' src='js//all.js'></script>
+<link rel="image_src" href="https://rychlost.cz/_data/img/rychlostcz.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+<meta name="color-scheme" content="light dark">
+<link id="css-darkmode" rel="stylesheet" type="text/css" href="styles/dark.css" media="(prefers-color-scheme: dark)" />
+<script type='text/javascript'>
+ntmtSiteVars['darkmode_enabled']=true;
+ntmtSiteVars['theme_forced']='';
+
+if (localStorage.getItem('theme_forced')=='light' || localStorage.getItem('theme_forced')=='dark') {
+	ntmtSiteVars['theme_forced']=localStorage.getItem('theme_forced');
+}
+
+ntmtSiteVars['theme_active']='light';
+
+if ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) || ntmtSiteVars['theme_forced']=='dark') {
+	
+	ntmtSiteVars['theme_active']='dark';
+}
+
+if (ntmtSiteVars['theme_forced']!='') {
+	
+	ntmtSiteVars['theme_active']=ntmtSiteVars['theme_forced'];
+}
+
+if (ntmtSiteVars['theme_active']=='dark') {
+}
+
+if (ntmtSiteVars['theme_forced']!='') {
+		
+	if (ntmtSiteVars['theme_forced']=='dark') {
+	
+		document.getElementById('css-darkmode').setAttribute('media', 'all');
+		document.getElementById('css-darkmode').disabled=false;	
+	} else {
+		
+		document.getElementById('css-darkmode').setAttribute('media', 'not all');
+		document.getElementById('css-darkmode').disabled=true;
+	}
+}
+</script>
+
+<script type='text/javascript'>window.addEventListener("load", function(event){ body_onload(0,0); },false);</script>
+</head>
+
+<body>
+
+
+<div class="document pagecoretype-clanek pagetype-clanek-tmava-verze-webu" id="document">
+
+
+
+
+<div class="document-top">
+<div class="d-main-w">
+
+<span id="respshowmenu" class="respshowmenu"></span>
+
+<div class="d-logo-blk">
+<div class="d-logo"><a href="/">RYCHLOST<span>.cz</span></a></div>
+</div>
+
+<div id="d-topmenu" class="d-topmenu">
+<div>
+<div class="menu-item m-first" id="tu-hkat-0"><a href="/" class="menu-mainitem">Rychlost internetu</a></div><div onmouseover="tu_popupmenu('kat-1')" onmouseout="tu_popupmenu('')" class="menu-item" id="tu-hkat-1"><a href="/statistika/" class="menu-mainitem">Statistiky</a><div onmouseover="tu_popupmenu('kat-1')" onmouseout="tu_popupmenu('')" id="tu-kat-1" class="menu-blok"><ul><li><a href="/statistika/ip/">historie mé IP</a></li><li><a href="/statistika/net/">historie mé sítě</a></li><li><a href="/statistika/okres/">statistika dle okresů</a></li><li><a href="/statistika/okresrev/">statistika okresů dle připojení</a></li><li><a href="/statistika/poslednich-100/">posledních 100 testů</a></li><li><a href="/statistika/top/">100 nejlepších testů</a></li><li><a href="/specialy/prehled-adsl-tarifu/">výsledky měrení rychlosti ADSL</a></li><li><a href="/specialy/srovnani-mobilnich-pripojeni/">srovnání mobilních připojení</a></li><li><a href="/specialy/srovnani-pripojeni-kabelovych-televizi/">srovnání připojení kabelových televizí</a></li><li><a href="/skoly/">testy dle škol</a></li><li><a href="/hosts/">statistiky dle hostname</a></li></ul></div></div><div onmouseover="tu_popupmenu('kat-2')" onmouseout="tu_popupmenu('')" class="menu-item" id="tu-hkat-2"><a href="/forum/" class="menu-mainitem">Diskuze</a><div onmouseover="tu_popupmenu('kat-2')" onmouseout="tu_popupmenu('')" id="tu-kat-2" class="menu-blok"><ul><li><a href="/forum/sitovy-hardware/">Síťový hardware</a></li><li><a href="/forum/sitovy-software/">Síťový software</a></li><li><a href="/forum/vseobecna-diskuze-o-ruznych-typech-pripojeni/">Všeobecná diskuze o různych typech připojení</a></li><li><a href="/forum/doporuceni-pripojeni-v/">Doporučení připojeni v .......</a></li><li><a href="/forum/rychlost-cz/">O rychlost.cz</a></li><li><a href="/forum/clanky/">Diskuze k článkům</a></li><li><a href="/forum/ostatni/">Ostatní</a></li></ul></div></div><div onmouseover="tu_popupmenu('kat-3')" onmouseout="tu_popupmenu('')" class="menu-item" id="tu-hkat-3"><a href="/pripojeni/" class="menu-mainitem">Poskytovatelé připojení</a><div onmouseover="tu_popupmenu('kat-3')" onmouseout="tu_popupmenu('')" id="tu-kat-3" class="menu-blok"><ul><li><a href="/pripojeni/najit/">najít připojení dle lokality - poptávky</a></li><li><a href="/pripojeni/">procházet dle okresu</a></li><li><a href="/pripojeni-internetu/">přehled připojení dle způsobu připojení</a></li></ul></div></div><div onmouseover="tu_popupmenu('kat-4')" onmouseout="tu_popupmenu('')" class="menu-item" id="tu-hkat-4"><a href="/informace/" class="menu-mainitem">Informace</a><div onmouseover="tu_popupmenu('kat-4')" onmouseout="tu_popupmenu('')" id="tu-kat-4" class="menu-blok last"><ul><li><a href="/informace/o-serveru/">o projektu</a></li><li><a href="/informace/podpora/">podpora serveru rychlost.cz</a></li><li><a href="/informace/princip/">metodika měření připojení</a></li><li><a href="/informace/pojmy/">vysvětlění pojmů</a></li><li><a href="/informace/reklama/">reklama na rychlost.cz</a></li><li><a href="/informace/placene/">služby pro poskytovatele připojení</a></li><li><a href="/informace/hostovani-serveru/">hostování serveru</a></li><li><a href="/informace/faq/">často kladené otázky</a></li><li><a href="/vpn/">VPN</a></li><li><a href="/informace/zasady/">zásady zpracování osobní údajů</a></li><li><a href="/informace/kontakt/">kontakt</a></li></ul></div></div><div onmouseover="tu_popupmenu('kat-5')" onmouseout="tu_popupmenu('')" class="menu-item" id="tu-hkat-5"><a href="/uzivatel/" class="menu-mainitem">Přihlásit se</a><div onmouseover="tu_popupmenu('kat-5')" onmouseout="tu_popupmenu('')" id="tu-kat-5" class="menu-blok last"><ul><li><a href="/uzivatel/">Přihlásit se</a></li><li><a href="/uzivatel/registrace/">Registrace</a></li><li><a href="/uzivatel/zapomenute-heslo/">Zapomenuté heslo</a></li></ul></div></div>
+
+</div>
+</div>
+<div class="top-langsw"><div class="top-langsw-sel" onclick="ntmt_langsw()"><img src="/_data/flags/flag-cz.png" width="20" height="13" alt="Česko" />  <b>▾</b><div class="cl-left"></div></div><div id="top-langsw-items" class="top-langsw-items"><div class="item"><a href="https://www.meter.net" title="Global - english - Internet speed test" hreflang="en"><img src="/_data/flags/flag-net.png" width="20" height="13" alt="World" /> <span>Internet speed test</span></a><div class="cl-left"></div></div><div class="item"><a href="https://www.geschwindigkeit.at" title="Österreich - internet Geschwindigkeit - speedtest" hreflang="de"><img src="/_data/flags/flag-at.png" width="20" height="13" alt="Österreich" /> <span>Speedtest</span></a><div class="cl-left"></div></div><div class="item"><a href="https://www.geschwindigkeit.de" title="Deutschland - Speedmeter - Internet Geschwindigkeit - Speedtest" hreflang="de"><img src="/_data/flags/flag-de.png" width="20" height="13" alt="Deutschland" /> <span>DSL speedtest</span></a><div class="cl-left"></div></div><div class="item"><a href="https://www.testvelocidad.es" title="España - Test de velocidad" hreflang="es"><img src="/_data/flags/flag-es.png" width="20" height="13" alt="España" /> <span>Test de velocidad</span></a><div class="cl-left"></div></div><div class="item"><a href="https://www.testdebit.fr" title="France - test de débit - speedtest" hreflang="fr"><img src="/_data/flags/flag-fr.png" width="20" height="13" alt="France" /> <span>Test débit</span></a><div class="cl-left"></div></div><div class="item"><a href="https://www.testvelocita.it" title="Italia - test adsl - speed test" hreflang="it"><img src="/_data/flags/flag-it.png" width="20" height="13" alt="Italia" /> <span>Test ADSL</span></a><div class="cl-left"></div></div><div class="item"><a href="https://www.speedmeter.hu" title="Magyarország - Sebesség mérés - speedmeter - speedtest" hreflang="hu"><img src="/_data/flags/flag-hu.png" width="20" height="13" alt="Magyarország" /> <span>Sebesség mérés</span></a><div class="cl-left"></div></div><div class="item"><a href="https://www.geschwindigkeit.ch" title="Schweiz - internet speed test" hreflang="de"><img src="/_data/flags/flag-ch.png" width="20" height="13" alt="Schweiz" /> <span>Internet speed test</span></a><div class="cl-left"></div></div><div class="item"><a href="https://www.predkosc.pl" title="Polska - Test prędkości łącza - speedtest" hreflang="pl"><img src="/_data/flags/flag-pl.png" width="20" height="13" alt="Polska" /> <span>Test łącza</span></a><div class="cl-left"></div></div><div class="item"><a href="https://www.rychlost.sk" title="Slovensko - slovensky - Meranie rýchlosťi pripojenia - speedmeter Rychlost.sk" hreflang="sk"><img src="/_data/flags/flag-sk.png" width="20" height="13" alt="Slovensko" /> <span>Meranie rýchlosťi pripojenia</span></a><div class="cl-left"></div></div><div class="item"><a href="https://www.netmeter.co.uk" title="United kingdom - Internet speed test - broadband speed test" hreflang="en"><img src="/_data/flags/flag-uk.png" width="20" height="13" alt="United kingdom" /> <span>Broadband speed test</span></a><div class="cl-left"></div></div><div class="item"><a href="https://xn--zcka2bjc9dzp.jp" title="スピードテスト - 日本" hreflang="ja"><img src="/_data/flags/flag-jp.png" width="20" height="13" alt="日本" /> <span>スピードテスト</span></a><div class="cl-left"></div></div><div class="item"><a href="https://xn--d1ach1ajefc.xn--p1ai" title="Россия - спидтест - скорость интернета" hreflang="ru"><img src="/_data/flags/flag-ru.png" width="20" height="13" alt="Россия" /> <span>спидтест - скорость интернета</span></a><div class="cl-left"></div></div></div></div>
+
+</div>
+</div>
+<div class="document-main">
+<div class="d-default d-default-b1">
+<div class="d-main-w">
+
+<div class="drob-nav"><a href="/">Rychlost.cz</a> <span>→</span> <a href="/clanek/">Články</a> <span>→</span> <b>Rychlost.cz v novém (tmavém) kabátě: Návod na implementaci tmavého režimu pro web</b></div><h1>Rychlost.cz v novém (tmavém) kabátě: Návod na implementaci tmavého režimu pro web</h1><div class="clanek-topline">02.11.2020</div>
+</div>
+</div>
+
+
+<div class="d-default d-default-b2">
+<div class="d-main-w">
+
+<p class="clanek-anotace">Web Rychlost.cz získal nový tmavý vzhled. Uvidí ho však primárně jen ti, kteří mají na počítači nastavenou preferenci tmavého designu nebo na mobilním telefonu aktivovaný tmavý (noční) režim. Na první pohled nejde o žádný velký redesign. Tato funkce však usnadní život zejména nočním tvorům, které pod rouškou tmy bílé nastavení oslňuje. Přináším vám návod, jak tmavý režim aktivovat i na vašem webu.</p>
+<div class="clanek-text">
+<h2>Tmavý režim používá kolem 20 % návštěvníků. Usnadněte jim čtení</h2>
+
+<p>Smyslem této změny je nabídnout uživatelům příjemné uživatelské prostředí. Procházet světlý web na telefonu nebo desktopu s tmavým schématem není zrovna příjemné, což po vlastním testování mohu jedině potvrdit. Podle interních statistik používá přibližně 20 % návštěvníků zařízení s preferencí tmavého designu. To rozhodně není zanedbatelné procento. O to překvapivější je, že ve velkém rybníku českých webů je jen minimum těch, které by s možností přepnutí do tmavého režimu počítaly.</p>
+
+<p>Zahraniční weby (ale také mobilní aplikace) jsou v tomto ohledu napřed. Takzvaný Dark Mode dnes nativně nabízí třeba WhatsApp, Instagram, Messenger nebo Facebook Lite a po redesignu i desktopová verze Facebooku. Stejně jako implementace responzivního webu a důrazu na rychlost může být právě podpora tmavého designu důležitým krokem na cestě k uživatelsky přívětivému prostředí. Je na každém provozovateli webu, aby zvážil, zda pro něj má taková funkce větší význam. Statistiky návštěvnosti však jasně ukazují, že tmavý režim využívá víc uživatelů, než se na první pohled zdá.</p>
+
+<h2>Jak na web přidat možnost tmavého zobrazení?</h2>
+
+<p>Samotná implementace tmavého režimu je relativně snadná. Samozřejmě je potřeba mít někde v šuplíku připravený design – k tomu stačí pouhé „přetížení“ CSS stylů. Změna HTML kódu by pro tento účel byla velmi nešťastným řešením.</p>
+
+<p>Pokud již máte hotový CSS soubor, nabízí se v zásadě dvě možnosti. Buď budete mít pro každé schéma samostatný CSS soubor, nebo si připravíte jeden základní pro světlý design. K němu pak připravíte tmavou variantu, která jen přepíše odlišné hodnoty (barvy).</p>
+
+<p>V HTML hlavičce (HEAD) uveďte element:</p>
+
+<pre style="background-color:#aaa;padding:10px 20px;margin:10px 0;color:#000;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word;">&lt;meta name="color-scheme" content="light dark"&gt;</pre>
+
+<p>Jde o informaci pro internetový prohlížeč, byť s ní tuto chvíli zřejmě příliš nepracuje. Dá se však očekávat, že v budoucnu bude na základě této informace webový prohlížeč sám nabízet tlačítko na ruční změnu barevného schématu. To bude platit samozřejmě jen u webových stránek, které ji budou podporovat.</p>
+
+<p>Mnohem důležitější je však do HTML hlavičky uvést informaci o tom, kde se CSS soubor s tmavým schématem nachází:</p>
+
+<pre style="background-color:#aaa;padding:10px 20px;margin:10px 0;color:#000;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word;">&lt;link id="css-darkmode" rel="stylesheet" type="text/css" href="/cesta-k-tmavemu-css-souboru.css" media="(prefers-color-scheme: dark)" /&gt;</pre>
+
+<p>Stejně jako například pro media=”print” (pro tiskový CSS) se zde uvede media=”(prefers-color-scheme: dark)”.</p>
+
+<p>Sami posuďte, jestli webu Rychlost.cz tmavá sluší</p>
+<p>Pokud si chcete porovnat rozdíl mezi světlým a tmavým zobrazením webu Rychlost.cz, nemusíte nutně měnit nastavení operačního systému nebo spouštět noční režim na telefonu. Stačí, když v dolní části stránky klikne na „Ruční přepnutí tmavého a světlého vzhledu“. Sami posuďte, které barevné schéma je pro vás uživatelsky přívětivější.</p>
+
+
+<h3 style="text-align:center;">Světlá verze</h3>
+<div style="text-align:center;margin:10px 0;"><img src="/_data/clanky/132/design-light-small.png" class="autoresizeimg-img"></div>
+
+<h3 style="text-align:center;">Tmavá verze</h3>
+<div style="text-align:center;margin:10px 0;"><img src="/_data/clanky/132/design-dark-small.png" class="autoresizeimg-img"></div>
+
+<h2>S jakými problémy při implementaci počítat?</h2>
+
+<p>Jedním ze základních problémů je nemožnost stylování některých formulářových prvků. V případě webu Rychlost.cz šlo o výběrové tlačítko (SELECT). Tento problém se však se dá obejít přepisem SELECTu přes Javascript.</p>
+
+
+<h2>Možnost ručního přepínání – ano, nebo ne?</h2>
+<p>Nabízí se otázka, zda uživatelům nabídnout možnost manuálního přepnutí webu z tmavé do světlé a naopak, a to bez nutnosti změny globálního nastavení. V případě zcela nového webu by to zřejmě nutné nebylo. Pokud se však jedná o web se stálými uživateli, kteří jsou na původní vzhled zvyklí, je dobré jim takovou možnost nabídnout. Možná se najdou tací, kteří i při zapnutém tmavém módu budou chtít vidět web v klasickém bílém hávu.</p>
+
+<p>K manuálnímu přepínání slouží javascript v dolní části stránky a uložení stavu do localstorage:</p>
+
+<pre style="background-color:#aaa;padding:10px 20px;margin:10px 0;color:#000;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word;">
+&lt;script type='text/javascript'&gt;
+
+function ntmt_ld_theme_switch() {
+	
+	if (ntmtSiteVars['theme_active']=='light') {
+
+		ntmtSiteVars['theme_active']=ntmtSiteVars['theme_forced']='dark';
+			
+		document.getElementById('css-darkmode').setAttribute('media', 'all');
+		document.getElementById('css-darkmode').disabled=false;
+		
+		
+	} else {
+		
+		ntmtSiteVars['theme_active']=ntmtSiteVars['theme_forced']='light';
+	
+		document.getElementById('css-darkmode').setAttribute('media', 'not all');
+		document.getElementById('css-darkmode').disabled=true;
+	}
+
+	localStorage.setItem('theme_forced', ntmtSiteVars['theme_active']);	
+}
+
+&lt;/script&gt;
+&lt;div class="d-dmode-sw-bottom"&gt;&lt;button onclick="ntmt_ld_theme_switch();"&gt;Ruční přepnutí tmavého a světlého vzhledu&lt;/button&gt;&lt;/div&gt;
+</pre>
+
+
+<p>V HEAD části stránky se musí tento stav také projevit čtením proměnné z local storage a přidáním ID pro tmavý CSS soubor s ID rovno “css-darkmode”.</p>
+
+<pre style="background-color:#aaa;padding:10px 20px;margin:10px 0;color:#000;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word;">
+&lt;script type='text/javascript'&gt;
+
+ntmtSiteVars['theme_forced']='';
+
+if (localStorage.getItem('theme_forced')=='light' || localStorage.getItem('theme_forced')=='dark') {
+	ntmtSiteVars['theme_forced']=localStorage.getItem('theme_forced');
+}
+
+if (ntmtSiteVars['theme_forced']!='') {
+		
+	if (ntmtSiteVars['theme_forced']=='dark') {
+	
+		document.getElementById('css-darkmode').setAttribute('media', 'all');
+		document.getElementById('css-darkmode').disabled=false;	
+	} else {
+		
+		document.getElementById('css-darkmode').setAttribute('media', 'not all');
+		document.getElementById('css-darkmode').disabled=true;
+	}
+}
+&lt;/script&gt;
+</pre>
+
+<p>Jedná se o příkladovou implementaci, která popisuje princip nastavení. Je na každém, jak se s manuálním přepínáním režimů vypořádá a jaký postup reálně uplatní.</p>
+
+<p>Sám jsem zvědavý, bude-li v budoucnu možnost tmavého zobrazení standardní funkcionalitou webů. Na to si však budeme muset zřejmě ještě chvíli počkat. Pokud sami noční režim na svých zařízeních využíváte a z plejády webů na bílém podkladu vás bolí hlava, zkuste si do prohlížeče nainstalovat rozšíření, které dokáže ztmavit jakýkoliv web. Existuje jich hned několik.</p>
+<div class="cl-both"></div></div>
+
+<p class="clanek-anotace">Autor článku: Redakce</p><script type='text/javascript'>wbp_statclanek(132)</script>
+<div class="clanek-diskuse"><p><a href="/forum/tema/4714/">Vstoupit do diskuze (0)</a></p></div>
+</div>
+</div>
+
+</div>
+
+
+
+
+<div class="document-bottom">
+<div class="d-main-w">
+
+<div id="copyright">
+<div><b>&copy; 2004-2022 Rychlost.cz</b>, všechna práva vyhrazena, <a href="/informace/kontakt/">kontakt</a>, <a href="/informace/podminky/">podmínky užití</a>, <a href="https://rychlost.cz/_pub/rss.php">RSS</a>.| Informace jsou orientační.<script type='text/javascript'>
+
+function ntmt_ld_theme_switch() {
+	
+	if (ntmtSiteVars['theme_active']=='light') {
+
+		ntmtSiteVars['theme_active']=ntmtSiteVars['theme_forced']='dark';
+			
+		document.getElementById('css-darkmode').setAttribute('media', 'all');
+		document.getElementById('css-darkmode').disabled=false;
+		
+		
+	} else {
+		
+		ntmtSiteVars['theme_active']=ntmtSiteVars['theme_forced']='light';
+	
+				document.getElementById('css-darkmode').setAttribute('media', 'not all');
+		document.getElementById('css-darkmode').disabled=true;
+	}
+
+	localStorage.setItem('theme_forced', ntmtSiteVars['theme_active']);	
+}
+
+</script>
+<div class="d-dmode-sw-bottom"><button onclick="ntmt_ld_theme_switch();">Ruční přepnutí tmavého a světlého vzhledu</button></div>
+<!-- (C)2000-2014 Gemius SA - gemiusAudience / rychlost.cz / Homepage -->
+</body>
+</html>
