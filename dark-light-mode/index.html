@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Dark Mode Baseline</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="supported-color-schemes" content="dark light">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="">
+
+    <link id="css-lightmode" rel="stylesheet" type="text/css" href="css/light.css"
+        media="(prefers-color-scheme: no-preference), (prefers-color-scheme: light)" />
+    <link id="css-darkmode" rel="stylesheet" type="text/css" href="css/dark.css" media="(prefers-color-scheme: dark)" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/mode-switch.css">
+
+    <script src="script/dark-light-mode.js"></script>
+</head>
+
+<body>
+    <h1>Hey there! This is just a title</h1>
+    <p>Go to second page <a href="second-page.html">second-page</a></p>
+    <p>I am just a boring text, existing here solely for the purpose of this demo</p>
+    <p>And I am just another one like the one above me, because two is better than having only one</p>
+    <p>Some body text with a <a href="#">link</a> pointing to nowhere.</p>
+    <form>
+        <input type="text" placeholder="Some input">
+        <button type="button">Some button</button>
+    </form>
+    <figure>
+        <img src="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Fmockaroon-1333674-unsplash.jpg?1558958450566"
+            alt="Colored candy worms" intrinsicsize="948x733">
+        <figcaption>Photo by <a href="https://unsplash.com/photos/XVYz_QeiEBw" target="_blank"
+                rel="noopener noreferrer">Mockaroon</a> on <a href="https://unsplash.com/">Unsplash</a>.</figcaption>
+    </figure>
+    <p>
+        <img src="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Fbaseline-wb_incandescent-24px.svg?1558957452117"
+            alt=""> Some icon
+        <img src="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Fbaseline-wb_sunny-24px.svg?1558957452243"
+            alt=""> Some icon
+    </p>
+    <!-- dark/light switcher -->
+    <ul class="mode-switch">
+        <li class="mode-switch-icon"></li>
+        <li><label class="switch"><input type="checkbox"><span class="slider round"></span></label></li>
+    </ul>
+    <script src="script/dark-light-mode-switch.js"></script>
+</body>
+
+</html>
