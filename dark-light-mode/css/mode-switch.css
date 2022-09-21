@@ -21,12 +21,13 @@
 }
 
 .mode-switch-dark {
-    background: url(/img/moon.png) no-repeat left top;
+    background: url(/img/moon.svg) no-repeat left top;
     background-size: 32px 32px;
+    filter: invert(100%);
 }
 
 .mode-switch-light {
-    background: url(/img/sun.png) no-repeat left top;
+    background: url(/img/sun.svg) no-repeat left top;
     background-size: 32px 32px;
 }
 
